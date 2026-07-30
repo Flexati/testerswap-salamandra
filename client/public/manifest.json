@@ -1,0 +1,60 @@
+{
+  "name": "TesterSwap Salamandra",
+  "short_name": "TesterSwap",
+  "description": "Free tester exchange platform for Android developers. Reach 12 testers through reciprocal testing.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "theme_color": "#FF6B35",
+  "background_color": "#FFFFFF",
+  "categories": ["productivity", "utilities"],
+  "screenshots": [
+    {
+      "src": "/manus-storage/salamandra-splash-screen_872976f7.png",
+      "sizes": "540x720",
+      "type": "image/png",
+      "form_factor": "narrow"
+    }
+  ],
+  "icons": [
+    {
+      "src": "/manus-storage/salamandra-app-icon-512_ac6ca306.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/manus-storage/salamandra-app-icon-512_ac6ca306.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Dashboard",
+      "short_name": "Dashboard",
+      "description": "View your Road to 12 dashboard",
+      "url": "/dashboard",
+      "icons": [
+        {
+          "src": "/manus-storage/salamandra-app-icon-512_ac6ca306.png",
+          "sizes": "192x192"
+        }
+      ]
+    },
+    {
+      "name": "Marketplace",
+      "short_name": "Marketplace",
+      "description": "Browse available tests",
+      "url": "/marketplace",
+      "icons": [
+        {
+          "src": "/manus-storage/salamandra-app-icon-512_ac6ca306.png",
+          "sizes": "192x192"
+        }
+      ]
+    }
+  ]
+}

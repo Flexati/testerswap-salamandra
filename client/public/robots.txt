@@ -1,0 +1,14 @@
+User-agent: *
+Allow: /
+Disallow: /admin
+Disallow: /dashboard/settings
+Disallow: /*.json$
+Disallow: /*.xml$
+
+Sitemap: https://testerswap.manus.space/sitemap.xml
+
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /

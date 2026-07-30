@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, viewport-fit=cover" />
+    <meta name="description" content="TesterSwap Salamandra: Free tester exchange platform for Android developers. Reach 12 testers through reciprocal testing. No payments, just fair swaps." />
+    <meta name="keywords" content="Android testing, tester exchange, Google Play Store, app testing, beta testing, mobile app testing" />
+    <meta name="theme-color" content="#FF6B35" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="TesterSwap" />
+    
+    <title>TesterSwap Salamandra - Free Android Testing Platform</title>
+    
+    <link rel="icon" type="image/png" href="/manus-storage/salamandra-favicon_dbad5841.png" />
+    <link rel="apple-touch-icon" href="/manus-storage/salamandra-app-icon-512_ac6ca306.png" />
+    <link rel="manifest" href="/manifest.json" />
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet" />
+    
+    <style>
+      :root {
+        --font-sans: 'Inter', sans-serif;
+        --font-display: 'Poppins', sans-serif;
+      }
+      body {
+        font-family: var(--font-sans);
+      }
+      h1, h2, h3, h4, h5, h6 {
+        font-family: var(--font-display);
+        font-weight: 700;
+      }
+    </style>
+  </head>
+
+  <body>
+    <noscript>TesterSwap requires JavaScript to run. Please enable JavaScript in your browser.</noscript>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+    <script
+      defer
+      src="%VITE_ANALYTICS_ENDPOINT%/umami"
+      data-website-id="%VITE_ANALYTICS_WEBSITE_ID%"></script>
+  </body>
+
+</html>
