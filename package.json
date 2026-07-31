@@ -10,7 +10,8 @@
     "check": "tsc --noEmit",
     "format": "prettier --write .",
     "test": "vitest run",
-    "db:push": "drizzle-kit generate && drizzle-kit migrate"
+    "db:push": "drizzle-kit generate && drizzle-kit migrate",
+    "validate:firebase": "node scripts/validate-firebase-config.mjs"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.693.0",
@@ -20,6 +21,7 @@
     "@capacitor/android": "^8.3.1",
     "@capacitor/camera": "^8.1.2",
     "@capacitor/push-notifications": "^8.1.2",
+    "googleapis": "^144.0.0",
     "@hookform/resolvers": "^5.2.2",
     "@radix-ui/react-accordion": "^1.2.12",
     "@radix-ui/react-alert-dialog": "^1.1.15",
