@@ -1,0 +1,53 @@
+name: Upload to Play Console
+
+on:
+  workflow_run:
+    workflows: ["Build Android APK"]
+    types: [completed]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  upload:
+    name: Upload to Play Console Internal Track
+    runs-on: ubuntu-latest
+    if: ${{ github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success' }}
+    env:
+      PACKAGE_NAME: com.testerswap.salamandra
+      SERVICE_ACCOUNT_JSON: ${{ secrets.PLAY_STORE_SERVICE_ACCOUNT_JSON }}
+      TRACK: internal
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Download APK artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: app-release
+          path: android/app/build/outputs/apk/release/
+
+      - name: Decode service account
+        if: env.SERVICE_ACCOUNT_JSON != ''
+        run: |
+          mkdir -p ~/.config/gcloud
+          echo "$SERVICE_ACCOUNT_JSON" > ~/.config/gcloud/service-account.json
+          echo "Service account configured"
+
+      - name: Upload APK to Play Console
+        if: env.SERVICE_ACCOUNT_JSON != ''
+        uses: r0adkll/upload-google-play@v1
+        with:
+          serviceAccountJsonPlainText: ${{ env.SERVICE_ACCOUNT_JSON }}
+          packageName: ${{ env.PACKAGE_NAME }}
+          releaseFiles: android/app/build/outputs/apk/release/app-release.apk
+          track: ${{ env.TRACK }}
+          status: draft
+          mappingFile: android/app/build/outputs/mapping/release/mapping.txt
+          whatsNewDirectory: whatsnew/
+
+      - name: Skip notice
+        if: env.SERVICE_ACCOUNT_JSON == ''
+        run: |
+          echo "::warning::PLAY_STORE_SERVICE_ACCOUNT_JSON secret not configured. Add a service account JSON to repo secrets to enable Play Console upload."
