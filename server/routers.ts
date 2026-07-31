@@ -276,11 +276,14 @@ export const appRouter = router({
           }),
           hasScreenshot: z.boolean(),
           feedbackText: z.string().max(5000),
+          screenshotBase64: z.string().optional(),
+          screenshotMimeType: z.string().optional(),
         }),
       )
       .mutation(async ({ ctx, input }) => {
         try {
-          const result = await verifyCompletion({ userId: ctx.user.id, ...input });
+          const { screenshotBase64, screenshotMimeType, ...rest } = input;
+          const result = await verifyCompletion({ userId: ctx.user.id, ...rest, screenshotBase64, screenshotMimeType });
           // FIX B1: re-resolve testId/testTitle from enrollmentId so the
           // publisher branch of notifyOnVerifyCompletion actually fires.
           // FIX B4: log instead of silently swallowing DB errors.
@@ -315,15 +318,7 @@ export const appRouter = router({
   }),
 
   credits: router({
-    // Future monetization hook. Throws NOT_IMPLEMENTED on purpose.
-    purchase: protectedProcedure
-      .input(z.object({ packageId: z.string() }))
-      .mutation(async () => {
-        throw new TRPCError({
-          code: "NOT_IMPLEMENTED",
-          message: "L'acquisto di crediti non è ancora disponibile",
-        });
-      }),
+    // Platform is free — no credit purchases. Credits earned only via test completions.
   }),
 
   admin: router({

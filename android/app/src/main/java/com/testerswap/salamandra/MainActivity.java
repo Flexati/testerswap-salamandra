@@ -1,4 +1,4 @@
-package com.example.testerswap;
+package com.testerswap.salamandra;
 
 import com.getcapacitor.BridgeActivity;
 

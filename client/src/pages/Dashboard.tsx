@@ -1,4 +1,6 @@
 import { useAuth } from "@/_core/hooks/useAuth";
+import { AppRegistrationDialog } from "@/components/AppRegistrationDialog";
+import { MyActiveTests } from "@/components/MyActiveTests";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
@@ -171,10 +173,16 @@ export default function Dashboard() {
           </Card>
         </motion.div>
 
+        {/* My Active Tests Section */}
+        <MyActiveTests />
+
         {/* Apps Section */}
         {profile?.apps && profile.apps.length > 0 && (
           <motion.div variants={itemVariants} className="mb-8">
-            <h2 className="font-display text-2xl font-bold mb-4">Your Apps</h2>
+            <div className="flex items-center justify-between mb-4">
+              <h2 className="font-display text-2xl font-bold">Your Apps</h2>
+              <AppRegistrationDialog onSuccess={() => window.location.reload()} />
+            </div>
             <div className="grid md:grid-cols-2 gap-6">
               {profile.apps.map((app) => (
                 <Card key={app.id} className="hover:border-primary/40 transition-colors">
@@ -204,10 +212,7 @@ export default function Dashboard() {
             <TrendingUp className="w-12 h-12 text-foreground/30 mx-auto mb-4" />
             <h3 className="font-display text-xl font-bold mb-2">No apps yet</h3>
             <p className="text-foreground/60 mb-6">Register your first app to get started</p>
-            <Button className="gap-2">
-              <Zap className="w-4 h-4" />
-              Register App
-            </Button>
+            <AppRegistrationDialog onSuccess={() => window.location.reload()} />
           </motion.div>
         )}
       </motion.div>

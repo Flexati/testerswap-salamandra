@@ -1,7 +1,8 @@
 import { drizzle } from "drizzle-orm/mysql2";
 import { and, desc, eq, gte, sql, ne } from "drizzle-orm";
 import { InsertUser, users, apps, tests, enrollments, creditsLedger, trustEvents, creditLocks, adminAuditLog, reports, badges, notifications } from "../drizzle/schema";
-import { ENV } from './_core/env';
+import { ENV } from "./_core/env";
+import { storagePut } from "./storage";
 import {
   requiredCreditsForTest,
   canAffordEnrollment,
@@ -386,6 +387,8 @@ export interface VerifyCompletionInput {
   };
   hasScreenshot: boolean;
   feedbackText: string;
+  screenshotBase64?: string;
+  screenshotMimeType?: string;
 }
 
 /**
@@ -433,6 +436,20 @@ export async function verifyCompletion(input: VerifyCompletionInput): Promise<{
     isConfirmedByPublisher: false,
   });
 
+  // Upload screenshot if provided
+  let screenshotUrl: string | null = null;
+  if (input.hasScreenshot && input.screenshotBase64) {
+    try {
+      const buffer = Buffer.from(input.screenshotBase64, "base64");
+      const mimeType = input.screenshotMimeType || "image/jpeg";
+      const { url } = await storagePut(`screenshots/enrollment-${input.enrollmentId}`, buffer, mimeType);
+      screenshotUrl = url;
+    } catch (err) {
+      console.error("[verifyCompletion] screenshot upload failed", { enrollmentId: input.enrollmentId, err });
+      // Don't fail the whole verification if screenshot upload fails
+    }
+  }
+
   await db.transaction(async (tx) => {
     await tx
       .update(enrollments)
@@ -441,7 +458,7 @@ export async function verifyCompletion(input: VerifyCompletionInput): Promise<{
         completedAt: new Date(),
         creditsEarned: awarded,
         feedback: input.feedbackText,
-        screenshotUrl: null,
+        screenshotUrl,
         checklist: JSON.stringify(input.checklist),
         updatedAt: new Date(),
       })
