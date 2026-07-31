@@ -18,7 +18,7 @@ jobs:
 
     env:
       NODE_VERSION: 22.x
-      JAVA_VERSION: 17
+      JAVA_VERSION: 21
       ANDROID_API_LEVEL: 34
       ANDROID_BUILD_TOOLS_VERSION: 34.0.0
 
